@@ -15,10 +15,15 @@ class Settings:
     config: Config
     pac_template: str
 
+
 settings = Settings()
 
 
-with open("./config.json") as f:    
-    settings.config = Config(**json.load(f))
-    with open(settings.config.pac_template_path) as f:
-        settings.pac_template = f.read()
+def refresh_settings():
+    with open("./config.json") as f:
+        settings.config = Config(**json.load(f))
+        with open(settings.config.pac_template_path) as f:
+            settings.pac_template = f.read()
+
+
+refresh_settings()
