@@ -22,10 +22,15 @@ def start():
         refresh_settings()
 
         working_proxies = []
+        failed_proxies = []
         for proxy_protocol in settings.config.proxies:
             for proxy in settings.config.proxies[proxy_protocol]:
                 if test_proxy(proxy, proxy_protocol):
                     working_proxies.append(proxy)
+                else:
+                    failed_proxies.append(proxy)
+                print(
+                    f"Testing proxies (working count: {len(working_proxies)}, failed count: {len(failed_proxies)})")
 
         proxies_json = json.dumps(working_proxies)
         pac_output_text = settings.pac_template.replace(
