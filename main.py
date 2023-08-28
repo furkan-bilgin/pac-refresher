@@ -1,19 +1,25 @@
+from settings import settings, refresh_settings
 import requests
 import json
 import time
-from settings import settings, refresh_settings
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-PROXY_TEST_URL = "https://httpbin.org/status/200"
-PROXY_TIMEOUT_MS = 3000
+
+PROXY_TEST_URL = "http://httpbun.com/get"
+PROXY_TIMEOUT_SEC = 2.5
 
 
 def test_proxy(proxy_url, proxy_protocol):
     try:
         r = requests.get(PROXY_TEST_URL, proxies={
-                         proxy_protocol: f"{proxy_protocol}://{proxy_url}"}, timeout=PROXY_TIMEOUT_MS)
+                         "http": f"{proxy_protocol}://{proxy_url}"}, timeout=PROXY_TIMEOUT_SEC)
+        _ = r.json()
         return r.ok
     except Exception as ex:
-        print(ex)
+        if "sslv3" in str(ex):
+            return True
+
         return False
 
 
