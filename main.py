@@ -7,7 +7,7 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
-PROXY_TEST_URL = "http://httpbun.com/get"
+PROXY_TEST_URL = "https://httpbun.com/get"
 PROXY_TIMEOUT_SEC = 2.5
 THREAD_POOL_SIZE = 20
 
